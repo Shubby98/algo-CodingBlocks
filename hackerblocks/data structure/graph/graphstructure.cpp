@@ -7,21 +7,21 @@ using namespace std;
 class graph
 {
     int v,e;
-    list<int> *l;
+    list<int> *adjlist;
 public:
     graph(int v,int e)
     {
         this->v = v;
         this->e = e;
-        l = new list<int>[v];
+        adjlist = new list<int>[v];
     }
 
     void addedge(int u,int v,bool bidir=true)
     {
-        l[u].push_front(v);
+        adjlist[u].push_front(v);
         if(bidir)
         {
-            l[v].push_front(u);
+            adjlist[v].push_front(u);
         }
     }
 
@@ -31,7 +31,7 @@ public:
         {
             cout<<i;
             list<int>:: iterator it;
-            for(it = l[i].begin(); it!=l[i].end() ; it++ )
+            for(it = adjlist[i].begin(); it!=adjlist[i].end() ; it++ )
             {
                 cout<<"-->"<<*it;
             }
@@ -48,19 +48,18 @@ public:
         while(!q.empty())
         {
             int curr = q.front();
-            list<int>:: iterator it;
-            for(it = l[curr].begin(); it != l[curr].end() ; it++ )
+            cout<<curr<<" ";
+            q.pop();
+            for(int neighbour: adjlist[curr])
             {
-                int adj = *it;
-                if(!flag[adj])
+
+                if(!flag[neighbour])
                 {
-                    q.push(adj);
-                    flag[adj] = true;
+                    q.push(neighbour);
+                    flag[neighbour] = true;
                 }
             }
 
-            cout<<curr<<" ";
-            q.pop();
         }
 
     }
