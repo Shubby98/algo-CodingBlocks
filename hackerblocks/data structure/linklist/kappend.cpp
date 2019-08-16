@@ -46,32 +46,32 @@ void print(node* &head)
 	cout<<endl;
 }
 
-void Kappend(node* &head,int k)
+node* Kappend(node* &head ,int k)
 {
-	node * trav = head;
-	int n = k;
-	while(n--)
-	{
-        //cout<<n<<endl;
-		trav =  trav->next;
-	}
-	//cout<<"value of trav = "<<trav->data<<endl;
-	node * prev = head;
-	//trav = trav->next;
-	while(trav->next!=NULL){
-		trav = trav->next;
-		prev = prev->next;
-	}
-	//cout<<"value of trav after while= "<<trav->data<<endl;
-    //cout<<"value of prev after while= "<<prev->data<<endl;
 
-	trav->next = head;
-	head =  prev->next;
-	prev->next = NULL;
-    return ;
-	//head =  temp;
-	//cout<<trav->data<<endl;
-	//return head;
+    if(head==NULL || head->next == NULL)
+    {
+        return head;
+    }
+    node * prev = head;
+    while(--k)
+    {
+        prev = prev->next;
+        //cout<<prev->data<<" ";
+    }
+
+    node * first = prev->next;
+    node* last = first;
+    while(last->next!=NULL)
+    {
+        last = last->next;
+    }
+    last->next = head;
+    prev->next = NULL;
+    //cout<<first->data<<endl;
+
+    //print(first);
+    return first;
 }
 
 
@@ -80,12 +80,18 @@ int main()
 
 		int n;
 		cin>>n;
-		node * head1;
-		create(head1,n);
+		node * head;
+		create(head,n);
 		int k;
 		cin>>k;
-		Kappend(head1,k);
-		print(head1);
+		if(k>=n)
+		{
+            k = k%n;
+		}
+		if(k!=0)
+		head = Kappend(head,n-k);
+
+		print(head);
 
 }
 
